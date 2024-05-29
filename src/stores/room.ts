@@ -21,7 +21,6 @@ export const useRoomStore = defineStore({
         nameSearch: string
       }) => {
         return filter(state.rooms, (room) => {
-          console.log(filterValues.state, room.state,typeof filterValues.state, typeof room.state)
           return (filterValues.user === '' || room.user === filterValues.user)
             && (filterValues.state === '' || room.state === filterValues.state)
             && (filterValues.nameSearch === '' || room.name.toLowerCase().includes(filterValues.nameSearch.toLowerCase()))
