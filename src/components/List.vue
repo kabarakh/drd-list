@@ -2,7 +2,7 @@
 import { useRoomStore } from '@/stores/room'
 import { computed, ref, watch } from 'vue'
 import type { Room } from '@/interface/Room'
-import { filter } from 'lodash'
+import { filter, inRange } from 'lodash'
 
 const roomStore = useRoomStore()
 await roomStore.loadRooms()
@@ -60,6 +60,16 @@ const pagedRooms = computed(() => {
   return rooms.value.slice(currentPage.value * itemsPerPage, (currentPage.value + 1) * itemsPerPage)
 })
 
+const pagerPagesToRender = computed(() => {
+  const startEndPages = 2
+  const pagesAroundCurrent = 2
+
+  return filter([...Array(numberOfPages.value).keys()], (pageNumber): boolean => {
+    return pageNumber < startEndPages || pageNumber > numberOfPages.value - 1 - startEndPages || // within the first or last elements
+      inRange(pageNumber, currentPage.value - pagesAroundCurrent, currentPage.value + 1 + pagesAroundCurrent); // close enough to current page
+  });
+})
+
 const stateToText = {
   0: 'new',
   1: 'accepted',
@@ -94,13 +104,8 @@ const updateCurrentPage = (newPage: number): void => {
 </script>
 
 <style scoped>
-a {
+button {
   cursor: pointer;
-}
-
-a.disabled {
-  cursor: default;
-  color: gray;
 }
 
 table {
@@ -185,9 +190,12 @@ th {
       </tr>
     </table>
     <div class="flex flex-row gap-3">
-      <a :class="{disabled: currentPage === 0}" @click.prevent="updateCurrentPage(currentPage - 1)">&laquo;</a>
-      <a :class="{underline: currentPage === page}" @click.prevent="updateCurrentPage(page)" v-for="page in [...Array(numberOfPages).keys()]" :key="page">{{ page + 1 }}</a>
-      <a :class="{disabled: currentPage === numberOfPages - 1}" @click.prevent="updateCurrentPage(currentPage + 1)">&raquo;</a>
+      <button :disabled="currentPage === 0" @click.prevent="updateCurrentPage(currentPage - 1)">&laquo;</button>
+      <template v-for="(page, index) in pagerPagesToRender" :key="page">
+        <button :class="{underline: currentPage === page}" @click.prevent="updateCurrentPage(page)" >{{ page + 1 }}</button>
+        <span v-if="pagerPagesToRender[index + 1] !== undefined && page + 1 !== pagerPagesToRender[index + 1]">...</span>
+      </template>
+      <button :disabled="currentPage === numberOfPages - 1" @click.prevent="updateCurrentPage(currentPage + 1)">&raquo;</button>
     </div>
   </div>
 
