@@ -27,7 +27,7 @@ await roomStore.loadRooms()
   <p>Deleted rooms are not included in the list!</p>
   <p>Also the filters don't react to each other ;)</p>
 
-  <template v-if="roomStore.rooms.length > 0">
+  <template v-if="roomStore.rooms.length">
     <ListFilter />
     <ListTable />
   </template>

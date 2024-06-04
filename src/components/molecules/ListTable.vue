@@ -40,7 +40,7 @@ const changeSorting = (field: string) => {
 }
 const pagedRooms = ref<Room[]>([]);
 
-watch([currentSorting, pagerStore, filterStore], () => {
+watch([() => roomStore.rooms, currentSorting, pagerStore, filterStore], () => {
   const filteredRooms = roomStore.filteredRooms
   const sortedRooms = filteredRooms.sort((roomA: Room, roomB: Room) => {
     const directionFactor = currentSorting.value.direction === 'asc' ? 1 : -1

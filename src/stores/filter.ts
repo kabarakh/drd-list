@@ -19,7 +19,7 @@ export const useFilterStore = defineStore({
   },
   state: (): {
     user: string,
-    state: '' | 1 | 2 | 3,
+    state: '' | 0 | 1 | 2 | 3,
     nameSearch: string
   } => {
     return {

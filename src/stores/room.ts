@@ -47,10 +47,10 @@ export const useRoomStore = defineStore({
     }
   },
   state: (): {
-    rooms: Room[]
+    rooms: Room[],
   } => {
     return {
-      rooms: []
+      rooms: [],
     }
   }
 })
