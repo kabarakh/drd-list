@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
-import List from '@/components/List.vue'
+import ListView from '@/components/views/ListView.vue';
 </script>
 
 <template>
   <Suspense>
     <main>
-      <List />
+      <ListView />
     </main>
   </Suspense>
 </template>
