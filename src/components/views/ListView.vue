@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useRoomStore } from '@/stores/room'
 import ListTable from '@/components/molecules/ListTable.vue'
 import ListFilter from '@/components/molecules/ListFilter.vue'
 import { useStore } from '@/stores/completeStore'
@@ -28,10 +27,10 @@ await completeStore.loadRooms()
   <p>Deleted rooms are not included in the list!</p>
   <p>Also the filters don't react to each other ;)</p>
 
-  <template v-if="completeStore.rooms.length">
+  <div v-if="completeStore.rooms.length">
     <ListFilter />
     <ListTable />
-  </template>
+  </div>
   <div v-else>
     Loading rooms
   </div>
