@@ -2,9 +2,10 @@
 import { useRoomStore } from '@/stores/room'
 import ListTable from '@/components/molecules/ListTable.vue'
 import ListFilter from '@/components/molecules/ListFilter.vue'
+import { useStore } from '@/stores/completeStore'
 
-const roomStore = useRoomStore()
-await roomStore.loadRooms()
+const completeStore = useStore()
+await completeStore.loadRooms()
 </script>
 
 <style>
@@ -27,7 +28,7 @@ await roomStore.loadRooms()
   <p>Deleted rooms are not included in the list!</p>
   <p>Also the filters don't react to each other ;)</p>
 
-  <template v-if="roomStore.rooms.length">
+  <template v-if="completeStore.rooms.length">
     <ListFilter />
     <ListTable />
   </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { usePagerStore } from '@/stores/pager'
+import { useStore } from '@/stores/completeStore'
 
-const pagerStore = usePagerStore();
+const completeStore = useStore();
 </script>
 
 <style scoped>
@@ -16,11 +16,11 @@ button {
 
 <template>
   <div class="flex flex-row gap-3">
-    <button :disabled="pagerStore.currentPage === 0" @click.prevent="pagerStore.updateCurrentPage(pagerStore.currentPage - 1)">&laquo;</button>
-    <template v-for="(page, index) in pagerStore.pagesToRender" :key="page">
-      <button :class="{underline: pagerStore.currentPage === page}" @click.prevent="pagerStore.updateCurrentPage(page)" >{{ page + 1 }}</button>
-      <span v-if="pagerStore.pagesToRender[index + 1] !== undefined && page + 1 !== pagerStore.pagesToRender[index + 1]">...</span>
+    <button :disabled="completeStore.pager.currentPage === 0" @click.prevent="completeStore.pager.currentPage = completeStore.pager.currentPage - 1">&laquo;</button>
+    <template v-for="(page, index) in completeStore.pagesToRender" :key="page">
+      <button :class="{underline: completeStore.pager.currentPage === page}" @click.prevent="completeStore.pager.currentPage = page" >{{ page + 1 }}</button>
+      <span v-if="completeStore.pagesToRender[index + 1] !== undefined && page + 1 !== completeStore.pagesToRender[index + 1]">...</span>
     </template>
-    <button :disabled="pagerStore.currentPage === pagerStore.numberOfPages - 1" @click.prevent="pagerStore.updateCurrentPage(pagerStore.currentPage + 1)">&raquo;</button>
+    <button :disabled="completeStore.pager.currentPage === completeStore.pager.numberOfPages - 1" @click.prevent="completeStore.pager.currentPage = completeStore.pager.currentPage + 1">&raquo;</button>
   </div>
 </template>
